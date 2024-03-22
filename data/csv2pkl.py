@@ -237,6 +237,7 @@ for csv_filename in l_csv_filename:
 
 m_msg = np.array(l_l_msg)
 #del l_l_msg
+print(n_error)
 print("Total number of AIS messages: ",m_msg.shape[0])
 
 print("Lat min: ",np.min(m_msg[:,LAT]), "Lat max: ",np.max(m_msg[:,LAT]))
