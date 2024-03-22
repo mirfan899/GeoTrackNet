@@ -219,7 +219,7 @@ for csv_filename in l_csv_filename:
         for row in csvReader:
 #             utc_time = datetime.strptime(row[8], "%Y/%m/%d %H:%M:%S")
 #             timestamp = (utc_time - EPOCH).total_seconds()
-            print(count)
+#             print(count)
             count += 1
             try:
                 l_l_msg.append([float(row[5]),float(row[6]),
