@@ -163,7 +163,7 @@ LAT_MAX = 20.5
 LON_MIN = 116.8
 LON_MAX = 126.6
 
-dataset_path = "./ais-gis-dataset/clean_csvs1"
+dataset_path = "./data/ais-gis-dataset/clean_csvs1"
 l_csv_filename =["output_1.csv",
                  "output_2.csv",
                  "output_3.csv",
