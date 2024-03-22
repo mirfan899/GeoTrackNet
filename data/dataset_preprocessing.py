@@ -29,18 +29,18 @@ import argparse
 def getConfig(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description="Parses command.")
     # ROI
-    parser.add_argument("--lat_min", type=float, default=47.5,
+    parser.add_argument("--lat_min", type=float, default=4.7,
                         help="Lat min.")
-    parser.add_argument("--lat_max", type=float, default=49.5,
+    parser.add_argument("--lat_max", type=float, default=20.5,
                         help="Lat max.")
-    parser.add_argument("--lon_min", type=float, default=-7.0,
+    parser.add_argument("--lon_min", type=float, default=116.8,
                         help="Lon min.")
-    parser.add_argument("--lon_max", type=float, default=-4.0,
+    parser.add_argument("--lon_max", type=float, default=126.6,
                         help="Lon max.")
      
     # File paths
     parser.add_argument("--dataset_dir", type=str, 
-                        default="/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/",
+                        default="data/ais-gis-dataset",
                         help="Dir to dataset.")    
     parser.add_argument("--l_input_filepath", type=str, nargs='+',
                         default=["ct_2017010203_10_20_test_track.pkl"],
@@ -391,46 +391,46 @@ print("min len: ",minlen)
 # For visualisation purpose, delete this part if you do not have coastline
 # shapfile
 
-coastline_filename = "./streetmap_coastline_Bretagne.pkl"
-
-if "bretagne" in config.output_filepath:
-    with open(coastline_filename, 'rb') as f:
-        l_coastline_poly = pickle.load(f)
+# coastline_filename = "./streetmap_coastline_Bretagne.pkl"
+#
+# if "bretagne" in config.output_filepath:
+#     with open(coastline_filename, 'rb') as f:
+#         l_coastline_poly = pickle.load(f)
 
 # In[35]:
 
-
-config.output_filepath
-
-
-# In[36]:
-
-
-Vs = Data
-FIG_DPI = 150
-plt.figure(figsize=(FIG_W/FIG_DPI, FIG_H/FIG_DPI), dpi=FIG_DPI)
-cmap = plt.cm.get_cmap('Blues')
-l_keys = list(Vs.keys())
-N = len(Vs)
-for d_i in range(N):
-    key = l_keys[d_i]
-    c = cmap(float(d_i)/(N-1))
-    tmp = Vs[key]
-    v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
-    v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-#     plt.plot(v_lon,v_lat,linewidth=0.8)
-    plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
-
-## Coastlines
-if "bretagne" in config.output_filepath:
-    for point in l_coastline_poly:
-        poly = np.array(point)
-        plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
-
-plt.xlim([LON_MIN,LON_MAX])
-plt.ylim([LAT_MIN,LAT_MAX])
-plt.xlabel("Longitude")
-plt.ylabel("Latitude")
-plt.tight_layout()
-plt.savefig(config.output_filepath.replace(".pkl",".png"))
-
+#
+# config.output_filepath
+#
+#
+# # In[36]:
+#
+#
+# Vs = Data
+# FIG_DPI = 150
+# plt.figure(figsize=(FIG_W/FIG_DPI, FIG_H/FIG_DPI), dpi=FIG_DPI)
+# cmap = plt.cm.get_cmap('Blues')
+# l_keys = list(Vs.keys())
+# N = len(Vs)
+# for d_i in range(N):
+#     key = l_keys[d_i]
+#     c = cmap(float(d_i)/(N-1))
+#     tmp = Vs[key]
+#     v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
+#     v_lon = tmp[:,1]*LON_RANGE + LON_MIN
+# #     plt.plot(v_lon,v_lat,linewidth=0.8)
+#     plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
+#
+# ## Coastlines
+# if "bretagne" in config.output_filepath:
+#     for point in l_coastline_poly:
+#         poly = np.array(point)
+#         plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
+#
+# plt.xlim([LON_MIN,LON_MAX])
+# plt.ylim([LAT_MIN,LAT_MAX])
+# plt.xlabel("Longitude")
+# plt.ylabel("Latitude")
+# plt.tight_layout()
+# plt.savefig(config.output_filepath.replace(".pkl",".png"))
+#

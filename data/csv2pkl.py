@@ -158,22 +158,25 @@ t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
 
 #===============
 # ## Est Aruba
-LAT_MIN = 10.0
-LAT_MAX = 14.0
-LON_MIN = -66.0
-LON_MAX = -60.0
+LAT_MIN = 4.7
+LAT_MAX = 20.5
+LON_MIN = 116.8
+LON_MAX = 126.6
 
-dataset_path = "./"
-l_csv_filename =["Est-aruba_5x5deg_2018001_2018120.csv",
-                 "Est-aruba_5x5deg_2018001_2018180.csv",
-                "Est-aruba_5x5deg_2019240_2019365_.csv"]
-#l_csv_filename =["Est-aruba_5x5deg_2018001_2018180.csv"]
-pkl_filename = "estaruba_20182019_track.pkl"
-pkl_filename_train = "estaruba_20182019_train_track.pkl"
-pkl_filename_valid = "estaruba_20182019_valid_track.pkl"
-pkl_filename_test  = "estaruba_20182019_test_track.pkl"
+dataset_path = "./ais-gis-dataset/clean_csvs1"
+l_csv_filename =["output_1.csv",
+                 "output_2.csv",
+                 "output_3.csv",
+                 "output_4.csv",
+                 "output_5.csv",
+                 "output_6.csv"]
 
-cargo_tanker_filename = "estaruba_20182019_cargo_tanker.npy"
+pkl_filename = "clean_csvs1_track.pkl"
+pkl_filename_train = "clean_csvs1_train_track.pkl"
+pkl_filename_valid = "clean_csvs1_valid_track.pkl"
+pkl_filename_test  = "clean_csvs1_test_track.pkl"
+
+cargo_tanker_filename = "clean_csvs1_cargo_tanker.npy"
 
 t_train_min = time.mktime(time.strptime("01/01/2018 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_train_max = time.mktime(time.strptime("30/04/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
