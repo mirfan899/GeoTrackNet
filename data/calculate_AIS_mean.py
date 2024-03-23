@@ -34,7 +34,7 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "./ct_2017010203_10_20/ct_2017010203_10_20_train.pkl"
+dataset_path = "pkls/train_tracks.pkl"
 import tensorflow as tf
 
 LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
