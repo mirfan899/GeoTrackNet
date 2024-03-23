@@ -40,13 +40,13 @@ def getConfig(args=sys.argv[1:]):
      
     # File paths
     parser.add_argument("--dataset_dir", type=str, 
-                        default="data/ais-gis-dataset",
+                        default="../data/csvs/",
                         help="Dir to dataset.")    
     parser.add_argument("--l_input_filepath", type=str, nargs='+',
-                        default=["ct_2017010203_10_20_test_track.pkl"],
+                        default=["clean_csvs_train_track.pkl"],
                         help="List of path to input files.")
     parser.add_argument("--output_filepath", type=str,
-                        default="./ct_2017010203_10_20/ct_2017010203_10_20_test.pkl",
+                        default="../data/csvs/clean_csvs_train_track_out.pkl",
                         help="Path to output file.")
     
     parser.add_argument("-v", "--verbose",dest='verbose',action='store_true', help="Verbose mode.")
@@ -124,22 +124,22 @@ print(len(Vs))
 #======================================
 # Cutting discontiguous voyages into contiguous ones
 print("Cutting discontiguous voyages into contiguous ones...")
-count = 0
-voyages = dict()
-INTERVAL_MAX = 2*3600 # 2h
-for mmsi in list(Vs.keys()):
-    v = Vs[mmsi]
-    # Intervals between successive messages in a track
-    intervals = v[1:,TIMESTAMP] - v[:-1,TIMESTAMP]
-    idx = np.where(intervals > INTERVAL_MAX)[0]
-    if len(idx) == 0:
-        voyages[count] = v
-        count += 1
-    else:
-        tmp = np.split(v,idx+1)
-        for t in tmp:
-            voyages[count] = t
-            count += 1
+# count = 0
+# voyages = dict()
+# INTERVAL_MAX = 2*3600 # 2h
+# for mmsi in list(Vs.keys()):
+#     v = Vs[mmsi]
+#     # Intervals between successive messages in a track
+#     intervals = v[1:,TIMESTAMP] - v[:-1,TIMESTAMP]
+#     idx = np.where(intervals > INTERVAL_MAX)[0]
+#     if len(idx) == 0:
+#         voyages[count] = v
+#         count += 1
+#     else:
+#         tmp = np.split(v,idx+1)
+#         for t in tmp:
+#             voyages[count] = t
+#             count += 1
 
 
 # In[6]:
@@ -156,16 +156,16 @@ print(len(Vs))
 # Removing AIS track whose length is smaller than 20 or those last less than 4h
 print("Removing AIS track whose length is smaller than 20 or those last less than 4h...")
 
-for k in list(voyages.keys()):
-    duration = voyages[k][-1,TIMESTAMP] - voyages[k][0,TIMESTAMP]
-    if (len(voyages[k]) < 20) or (duration < 4*3600):
-        voyages.pop(k, None)
+# for k in list(voyages.keys()):
+#     duration = voyages[k][-1,TIMESTAMP] - voyages[k][0,TIMESTAMP]
+#     if (len(voyages[k]) < 20) or (duration < 4*3600):
+#         voyages.pop(k, None)
 
 
 # In[8]:
 
 
-print(len(voyages))
+# print(len(voyages))
 
 
 # In[9]:
@@ -173,29 +173,29 @@ print(len(voyages))
 
 # STEP 4: REMOVING OUTLIERS
 #======================================
-print("Removing anomalous message...")
-error_count = 0
-tick = time.time()
-for k in  tqdm(list(voyages.keys())):
-    track = voyages[k][:,[TIMESTAMP,LAT,LON,SOG]] # [Timestamp, Lat, Lon, Speed]
-    try:
-        o_report, o_calcul = utils.detectOutlier(track, speed_max = 30)
-        if o_report.all() or o_calcul.all():
-            voyages.pop(k, None)
-        else:
-            voyages[k] = voyages[k][np.invert(o_report)]
-            voyages[k] = voyages[k][np.invert(o_calcul)]
-    except:
-        voyages.pop(k,None)
-        error_count += 1
-tok = time.time()
-print("STEP 4: duration = ",(tok - tick)/60) # 139.685766101 mfrom tqdm import tqdmins
+# print("Removing anomalous message...")
+# error_count = 0
+# tick = time.time()
+# for k in  tqdm(list(voyages.keys())):
+#     track = voyages[k][:,[TIMESTAMP,LAT,LON,SOG]] # [Timestamp, Lat, Lon, Speed]
+#     try:
+#         o_report, o_calcul = utils.detectOutlier(track, speed_max = 30)
+#         if o_report.all() or o_calcul.all():
+#             voyages.pop(k, None)
+#         else:
+#             voyages[k] = voyages[k][np.invert(o_report)]
+#             voyages[k] = voyages[k][np.invert(o_calcul)]
+#     except:
+#         voyages.pop(k,None)
+#         error_count += 1
+# tok = time.time()
+# print("STEP 4: duration = ",(tok - tick)/60) # 139.685766101 mfrom tqdm import tqdmins
 
 
 # In[10]:
 
 
-print(len(voyages))
+# print(len(voyages))
 
 
 # In[13]:
@@ -204,42 +204,42 @@ print(len(voyages))
 ## STEP 6: SAMPLING
 #======================================
 # Sampling, resolution = 5 min
-print('Sampling...')
-Vs = dict()
-count = 0
-for k in tqdm(list(voyages.keys())):
-    v = voyages[k]
-    sampling_track = np.empty((0, 9))
-    for t in range(int(v[0,TIMESTAMP]), int(v[-1,TIMESTAMP]), 300): # 5 min
-        tmp = utils.interpolate(t,v)
-        if tmp is not None:
-            sampling_track = np.vstack([sampling_track, tmp])
-        else:
-            sampling_track = None
-            break
-    if sampling_track is not None:
-        Vs[count] = sampling_track
-        count += 1
+# print('Sampling...')
+# Vs = dict()
+# count = 0
+# for k in tqdm(list(voyages.keys())):
+#     v = voyages[k]
+#     sampling_track = np.empty((0, 9))
+#     for t in range(int(v[0,TIMESTAMP]), int(v[-1,TIMESTAMP]), 300): # 5 min
+#         tmp = utils.interpolate(t,v)
+#         if tmp is not None:
+#             sampling_track = np.vstack([sampling_track, tmp])
+#         else:
+#             sampling_track = None
+#             break
+#     if sampling_track is not None:
+#         Vs[count] = sampling_track
+#         count += 1
 
 # In[11]:
 
 
 ## STEP 8: RE-SPLITTING
 #======================================
-print('Re-Splitting...')
-Data = dict()
-count = 0
-for k in tqdm(list(Vs.keys())): 
-    v = Vs[k]
-    # Split AIS track into small tracks whose duration <= 1 day
-    idx = np.arange(0, len(v), 12*DURATION_MAX)[1:]
-    tmp = np.split(v,idx)
-    for subtrack in tmp:
-        # only use tracks whose duration >= 4 hours
-        if len(subtrack) >= 12*4:
-            Data[count] = subtrack
-            count += 1
-print(len(Data))
+# print('Re-Splitting...')
+# Data = dict()
+# count = 0
+# for k in tqdm(list(Vs.keys())):
+#     v = Vs[k]
+#     # Split AIS track into small tracks whose duration <= 1 day
+#     idx = np.arange(0, len(v), 12*DURATION_MAX)[1:]
+#     tmp = np.split(v,idx)
+#     for subtrack in tmp:
+#         # only use tracks whose duration >= 4 hours
+#         if len(subtrack) >= 12*4:
+#             Data[count] = subtrack
+#             count += 1
+# print(len(Data))
 
 
 # ## STEP 5: REMOVING 'MOORED' OR 'AT ANCHOR' VOYAGES
@@ -260,18 +260,18 @@ print(len(Data))
 ## STEP 5: REMOVING 'MOORED' OR 'AT ANCHOR' VOYAGES
 #======================================
 # Removing 'moored' or 'at anchor' voyages
-print("Removing 'moored' or 'at anchor' voyages...")
-for k in  tqdm(list(Data.keys())):
-    d_L = float(len(Data[k]))
-
-    if np.count_nonzero(Data[k][:,NAV_STT] == 1)/d_L > 0.7 \
-    or np.count_nonzero(Data[k][:,NAV_STT] == 5)/d_L > 0.7:
-        Data.pop(k,None)
-        continue
-    sog_max = np.max(Data[k][:,SOG])
-    if sog_max < 1.0:
-        Data.pop(k,None)
-print(len(Data))
+# print("Removing 'moored' or 'at anchor' voyages...")
+# for k in  tqdm(list(Data.keys())):
+#     d_L = float(len(Data[k]))
+#
+#     if np.count_nonzero(Data[k][:,NAV_STT] == 1)/d_L > 0.7 \
+#     or np.count_nonzero(Data[k][:,NAV_STT] == 5)/d_L > 0.7:
+#         Data.pop(k,None)
+#         continue
+#     sog_max = np.max(Data[k][:,SOG])
+#     if sog_max < 1.0:
+#         Data.pop(k,None)
+# print(len(Data))
 # In[12]:
 
 
@@ -280,12 +280,12 @@ print(len(Data))
 
 ## STEP 6: REMOVING LOW SPEED TRACKS
 #======================================
-print("Removing 'low speed' tracks...")
-for k in tqdm(list(Data.keys())):
-    d_L = float(len(Data[k]))
-    if np.count_nonzero(Data[k][:,SOG] < 2)/d_L > 0.8:
-        Data.pop(k,None)
-print(len(Data))
+# print("Removing 'low speed' tracks...")
+# for k in tqdm(list(Data.keys())):
+#     d_L = float(len(Data[k]))
+#     if np.count_nonzero(Data[k][:,SOG] < 2)/d_L > 0.8:
+#         Data.pop(k,None)
+# print(len(Data))
 
 
 # In[21]:
@@ -294,8 +294,8 @@ print(len(Data))
 ## STEP 9: NORMALISATION
 #======================================
 print('Normalisation...')
-for k in tqdm(list(Data.keys())):
-    v = Data[k]
+for k in tqdm(list(Vs.keys())):
+    v = Vs[k]
     v[:,LAT] = (v[:,LAT] - LAT_MIN)/(LAT_MAX-LAT_MIN)
     v[:,LON] = (v[:,LON] - LON_MIN)/(LON_MAX-LON_MIN)
     v[:,SOG][v[:,SOG] > SPEED_MAX] = SPEED_MAX
@@ -318,7 +318,7 @@ print(config.output_filepath)
 # In[24]:
 
 
-print(len(Data))
+print(len(Vs))
 
 
 # In[25]:
@@ -346,7 +346,7 @@ if not os.path.exists(os.path.dirname(config.output_filepath)):
 ## STEP 10: WRITING TO DISK
 #======================================
 with open(config.output_filepath,"wb") as f:
-    pickle.dump(Data,f)
+    pickle.dump(Vs,f)
 
 
 # In[29]:
@@ -358,18 +358,18 @@ with open(config.output_filepath,"wb") as f:
 # In[30]:
 
 
-print(len(Data))
+# print(len(Data))
 
 
 # In[31]:
 
 
-minlen = 1000
-for k in list(Data.keys()):
-    v = Data[k]
-    if len(v) < minlen:
-        minlen = len(v)
-print("min len: ",minlen)
+# minlen = 1000
+# for k in list(Data.keys()):
+#     v = Data[k]
+#     if len(v) < minlen:
+#         minlen = len(v)
+# print("min len: ",minlen)
 
 
 # In[32]:

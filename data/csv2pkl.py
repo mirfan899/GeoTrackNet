@@ -163,29 +163,36 @@ LAT_MAX = 20.5
 LON_MIN = 116.8
 LON_MAX = 126.6
 
-dataset_path = "./data/ais-gis-dataset/clean_csvs1"
+dataset_path = "./csvs"
 l_csv_filename =["output_1.csv",
                  "output_2.csv",
                  "output_3.csv",
                  "output_4.csv",
                  "output_5.csv",
-                 "output_6.csv"]
+                 "output_6.csv",
+                 "output_7.csv",
+                 "output_8.csv",
+                 "output_9.csv",
+                 "output_10.csv",
+                 "output_11.csv",
+                 "output_12.csv"
+                 ]
 
-pkl_filename = "clean_csvs1_track.pkl"
-pkl_filename_train = "clean_csvs1_train_track.pkl"
-pkl_filename_valid = "clean_csvs1_valid_track.pkl"
-pkl_filename_test  = "clean_csvs1_test_track.pkl"
+pkl_filename = "clean_csvs_track.pkl"
+pkl_filename_train = "clean_csvs_train_track.pkl"
+pkl_filename_valid = "clean_csvs_valid_track.pkl"
+pkl_filename_test  = "clean_csvs_test_track.pkl"
 
-cargo_tanker_filename = "clean_csvs1_cargo_tanker.npy"
+cargo_tanker_filename = "clean_csvs_cargo_tanker.npy"
 
-t_train_min = time.mktime(time.strptime("01/01/2018 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_train_max = time.mktime(time.strptime("30/04/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-t_valid_min = time.mktime(time.strptime("01/09/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_valid_max = time.mktime(time.strptime("30/11/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-t_test_min  = time.mktime(time.strptime("01/12/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_test_max  = time.mktime(time.strptime("31/12/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_train_min = time.mktime(time.strptime("01/12/2023 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_train_max = time.mktime(time.strptime("15/01/2024 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_valid_min = time.mktime(time.strptime("16/01/2024 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_valid_max = time.mktime(time.strptime("15/02/2024 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_test_min  = time.mktime(time.strptime("16/02/2024 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_test_max  = time.mktime(time.strptime("01/03/2024 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_min = time.mktime(time.strptime("01/11/2023 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_max = time.mktime(time.strptime("01/04/2024 23:59:59", "%d/%m/%Y %H:%M:%S"))
 
 #========================================================================
 LAT_RANGE = LAT_MAX - LAT_MIN
@@ -195,8 +202,8 @@ SOG_MAX = 30.0  # the SOG is truncated to 30.0 knots max.
 EPOCH = datetime(1970, 1, 1)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI, SHIPTYPE, D2C  = list(range(11))
 
-CARGO_TANKER_ONLY = True
-if  CARGO_TANKER_ONLY:
+CARGO_TANKER_ONLY = False
+if CARGO_TANKER_ONLY:
     pkl_filename = "ct_"+pkl_filename
     pkl_filename_train = "ct_"+pkl_filename_train
     pkl_filename_valid = "ct_"+pkl_filename_valid
@@ -217,35 +224,31 @@ for csv_filename in l_csv_filename:
         next(csvReader) # skip the legend row
         count = 1
         for row in csvReader:
-#             utc_time = datetime.strptime(row[8], "%Y/%m/%d %H:%M:%S")
-#             timestamp = (utc_time - EPOCH).total_seconds()
-#             print(count)
+            utc_time = datetime.strptime(row[7], '%Y-%m-%dT%H:%M:%fZ')
+            timestamp = (utc_time - EPOCH).total_seconds()
             count += 1
             try:
-                l_l_msg.append([float(row[5]),float(row[6]),
-                               float(row[7]),float(row[8]),
-                               int(row[9]),float(row[12]),
-                               int(row[11]),int(row[4]),
-                               int(float(row[1])),
-                               int(row[13]),
-                               float(row[14])])
+                l_l_msg.append([float(row[0]), float(row[1]), float(row[2]),
+                                float(row[3]), int(row[4]),
+                                int(row[5]), int(row[6]),
+                                timestamp, int(row[8])]
+                               )
             except:
                 n_error += 1
                 continue
 
 
-
 m_msg = np.array(l_l_msg)
-#del l_l_msg
+del l_l_msg
 print(n_error)
 print("Total number of AIS messages: ",m_msg.shape[0])
 
 print("Lat min: ",np.min(m_msg[:,LAT]), "Lat max: ",np.max(m_msg[:,LAT]))
 print("Lon min: ",np.min(m_msg[:,LON]), "Lon max: ",np.max(m_msg[:,LON]))
 print("Ts min: ",np.min(m_msg[:,TIMESTAMP]), "Ts max: ",np.max(m_msg[:,TIMESTAMP]))
-
-if m_msg[0,TIMESTAMP] > 1584720228: 
-    m_msg[:,TIMESTAMP] = m_msg[:,TIMESTAMP]/1000 # Convert to suitable timestamp format
+#
+# if m_msg[0,TIMESTAMP] > 1584720228:
+#     m_msg[:,TIMESTAMP] = m_msg[:,TIMESTAMP]/1000 # Convert to suitable timestamp format
 
 print("Time min: ",datetime.utcfromtimestamp(np.min(m_msg[:,TIMESTAMP])).strftime('%Y-%m-%d %H:%M:%SZ'))
 print("Time max: ",datetime.utcfromtimestamp(np.max(m_msg[:,TIMESTAMP])).strftime('%Y-%m-%d %H:%M:%SZ'))
@@ -311,7 +314,7 @@ m_msg = m_msg[m_msg[:,SOG]<=SOG_MAX]
 m_msg = m_msg[m_msg[:,SOG]>=0]
 m_msg = m_msg[m_msg[:,COG]<=360]
 # D2C
-m_msg = m_msg[m_msg[:,D2C]>=D2C_MIN]
+# m_msg = m_msg[m_msg[:,D2C]>=D2C_MIN]
 
 # TIME
 m_msg = m_msg[m_msg[:,TIMESTAMP]>=0]

@@ -34,8 +34,8 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "pkls/train_tracks.pkl"
-import tensorflow as tf
+dataset_path = "./csvs/clean_csvs_train_track_out.pkl"
+# import tensorflow as tf
 
 LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
 #LAT_BINS = 350; LON_BINS = 1050; SOG_BINS = 30; COG_BINS = 72
@@ -65,11 +65,15 @@ dirname = os.path.dirname(dataset_path)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
 try:
-    with tf.gfile.Open(dataset_path, "rb") as f:
-        Vs = pickle.load(f)
+    with open(dataset_path, 'rb') as file_handle:
+        Vs = pickle.load(file_handle)
+    # with tf.gfile.Open(dataset_path, "rb") as f:
+    #     Vs = pickle.load(f)
 except:
-    with tf.gfile.Open(dataset_path, "rb") as f:
-        Vs = pickle.load(f, encoding = "latin1")
+    with open(dataset_path, 'rb') as file_handle:
+        Vs = pickle.load(file_handle, encoding="latin1")
+    # with tf.gfile.Open(dataset_path, "rb") as f:
+    #     Vs = pickle.load(f, encoding = "latin1")
 
 data_dim = LAT_BINS + LON_BINS + SOG_BINS + COG_BINS
 
@@ -83,7 +87,7 @@ current_ais_msg = 0
 count = 0
 for mmsi in list(Vs.keys()):
     count += 1
-    print(count)
+    # print(count)
     tmp = Vs[mmsi][:,[LAT,LON,SOG,COG]]
     tmp[tmp == 1] = 0.99999
     current_sparse_matrix,_,_ = sparse_AIS_to_dense(tmp,0,0)
@@ -93,6 +97,7 @@ for mmsi in list(Vs.keys()):
 
 mean = sum_all/total_ais_msg
 
+print(mean)
 with open(dirname + "/mean.pkl","wb") as f:
     pickle.dump(mean,f)
 
