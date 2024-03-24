@@ -85,9 +85,9 @@ tf.app.flags.DEFINE_float("ll_thresh", -17.47,
 # Dataset flags
 tf.app.flags.DEFINE_string("dataset_dir", "./data",
                            "Dataset directory")
-tf.app.flags.DEFINE_string("trainingset_name", "ct_aruba_2019/ct_aruba_2019_train.pkl",
+tf.app.flags.DEFINE_string("trainingset_name", "csvs/clean_csvs_train_track_out.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "ct_aruba_2019/ct_aruba_2019_test.pkl",
+tf.app.flags.DEFINE_string("testset_name", "csvs/clean_csvs_test_track_out.pkl",
                            "Path to load the testset from.")
 tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
@@ -109,14 +109,15 @@ tf.app.flags.DEFINE_float("interval_max", 2*3600,
 tf.app.flags.DEFINE_integer("min_duration", 4,
                             "Min duration (hour) of a vessel track")
 
+# ## Est Aruba
 # Four-hot-encoding flags.
-tf.app.flags.DEFINE_float("lat_min", 11.0,
+tf.app.flags.DEFINE_float("lat_min", 4.7,
                           "ROI")
-tf.app.flags.DEFINE_float("lat_max", 14.0,
+tf.app.flags.DEFINE_float("lat_max", 20.5,
                           "ROI")
-tf.app.flags.DEFINE_float("lon_min", -71.0,
+tf.app.flags.DEFINE_float("lon_min", 116.8,
                           "ROI")
-tf.app.flags.DEFINE_float("lon_max", -68.0,
+tf.app.flags.DEFINE_float("lon_max", 126.6,
                           "ROI")
 tf.app.flags.DEFINE_float("onehot_lat_reso", 0.01,
                           "Resolution of the lat one-hot vector (degree)")

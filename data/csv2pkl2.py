@@ -12,7 +12,7 @@ from tqdm import tqdm
 LAT_MIN, LAT_MAX = 4.7, 20.5
 LON_MIN, LON_MAX = 116.8, 126.6
 SOG_MAX = 30.0
-dataset_path = "/home/iffi/PycharmProjects/GeoTrackNet/data/clean_csvs1"
+dataset_path = "./csvs"
 l_csv_filename = [filename for filename in os.listdir(dataset_path) if filename.endswith('.csv')]
 
 # Time conversion

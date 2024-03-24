@@ -37,8 +37,8 @@ sys.path.append("./data/")
 dataset_path = "./csvs/clean_csvs_train_track_out.pkl"
 # import tensorflow as tf
 
-LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
-#LAT_BINS = 350; LON_BINS = 1050; SOG_BINS = 30; COG_BINS = 72
+# LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
+LAT_BINS = 1580; LON_BINS = 980; SOG_BINS = 30; COG_BINS = 72
 
 def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
     def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):

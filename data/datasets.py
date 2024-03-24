@@ -61,7 +61,7 @@ def create_AIS_dataset(dataset_path,
     total_bins = lat_bins+lon_bins+sog_bins+cog_bins
     def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis, time_start, time_end):
 #        lat_bins = 200; lon_bins = 300; sog_bins = 30; cog_bins = 72
-        def create_dense_vect(msg,lat_bins = 200, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
+        def create_dense_vect(msg,lat_bins = 1580, lon_bins = 980, sog_bins = 30 ,cog_bins = 72):
             lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
             data_dim = lat_bins + lon_bins + sog_bins + cog_bins
             dense_vect = np.zeros(data_dim)
@@ -127,8 +127,8 @@ def create_AIS_dataset(dataset_path,
         targets = data
 
         # Mean center the inputs.
-        # inputs = data - tf.constant(mean, dtype=tf.float32,
-        #                             shape=[1, 1, mean.shape[0]])
+        inputs = data - tf.constant(mean, dtype=tf.float32,
+                                    shape=[1, 1, mean.shape[0]])
         # Shift the inputs one step forward in time. Also remove the last
         # timestep so that targets and inputs are the same length.
         inputs = tf.pad(data, [[1, 0], [0, 0], [0, 0]], mode="CONSTANT")[:-1]
