@@ -148,7 +148,7 @@ tf.app.flags.DEFINE_boolean("normalize_by_seq_len", True,
                             "per sequence.")
 tf.app.flags.DEFINE_float("learning_rate", 0.0003,
                           "The learning rate for ADAM.")
-tf.app.flags.DEFINE_integer("max_steps", int(80000),
+tf.app.flags.DEFINE_integer("max_steps", int(30000),
                             "The number of gradient update steps to train for.")
 tf.app.flags.DEFINE_integer("summarize_every", 100,
                             "The number of steps between summaries.")
@@ -199,6 +199,10 @@ config.onehot_lon_bins = math.ceil((config.lon_max-config.lon_min)/config.onehot
 config.onehot_sog_bins = math.ceil(SPEED_MAX/config.onehot_sog_reso)
 config.onehot_cog_bins = math.ceil(360/config.onehot_cog_reso)
 
+print(config.onehot_lat_bins)
+print(config.onehot_lon_bins)
+print(config.onehot_sog_bins)
+print(config.onehot_cog_bins)
 config.data_dim  = config.onehot_lat_bins + config.onehot_lon_bins\
                  + config.onehot_sog_bins + config.onehot_cog_bins # error with data_dimension
 

@@ -52,6 +52,10 @@ Converting to csv:
 
 Preprocessing steps: the data are processed as described in the paper by `dataset_preprocessing.py`.
 
+```shell
+python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath clean_csvs_train_track.pkl --output_filepath ../data/csvs/clean_csvs_train_track_out.pkl
+python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath clean_csvs_valid_track.pkl --output_filepath ../data/csvs/clean_csvs_valid_track_out.pkl
+```
 ### Training the Embedding layer
 
 First we must train the Embedding layer:
