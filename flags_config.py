@@ -148,7 +148,7 @@ tf.app.flags.DEFINE_boolean("normalize_by_seq_len", True,
                             "per sequence.")
 tf.app.flags.DEFINE_float("learning_rate", 0.0003,
                           "The learning rate for ADAM.")
-tf.app.flags.DEFINE_integer("max_steps", int(20000),
+tf.app.flags.DEFINE_integer("max_steps", int(10000),
                             "The number of gradient update steps to train for.")
 tf.app.flags.DEFINE_integer("summarize_every", 100,
                             "The number of steps between summaries.")
