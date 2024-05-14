@@ -104,7 +104,7 @@ if config.mode in ["save_logprob","traj_reconstruction"]:
     runners.wait_for_checkpoint(saver, sess, config.logdir)
     step = sess.run(global_step)
     with open("./chkpt/checkpoint.txt", "w") as writer:
-        writer.write(step)
+        writer.write(str(step))
 
 #runners.wait_for_checkpoint(saver, sess, config.logdir)
 #step = sess.run(global_step)
