@@ -103,6 +103,8 @@ if config.mode in ["save_logprob","traj_reconstruction"]:
     sess = tf.train.SingularMonitoredSession()
     runners.wait_for_checkpoint(saver, sess, config.logdir)
     step = sess.run(global_step)
+    with open("./chkpt/checkpoint.txt", "w") as writer:
+        writer.write(step)
 
 #runners.wait_for_checkpoint(saver, sess, config.logdir)
 #step = sess.run(global_step)
@@ -110,8 +112,9 @@ if config.mode in ["save_logprob","traj_reconstruction"]:
 
 if step is None:
     # The log filename contains the step.
-    index_filename = sorted(glob.glob(config.logdir+"/*.index"))[-1] # the lastest step
-    step = int(index_filename.split(".index")[0].split("ckpt-")[-1])
+    # index_filename = sorted(glob.glob(config.logdir+"/*.index"))[-1] # the lastest step
+    # step = int(index_filename.split(".index")[0].split("ckpt-")[-1])
+    step = open("./chkpt/checkpoint.txt").read()
     
 
 print("Global step: ", step)
