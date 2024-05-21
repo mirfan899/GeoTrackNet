@@ -54,8 +54,19 @@ Now run `dataset_preprocessing.py`.
 python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath clean_csvs_train_track.pkl --output_filepath ../data/csvs/clean_csvs_train_track_out.pkl
 python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath clean_csvs_valid_track.pkl --output_filepath ../data/csvs/clean_csvs_valid_track_out.pkl
 python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath clean_csvs_test_track.pkl --output_filepath ../data/csvs/clean_csvs_test_track_out.pkl
+
+
+#ais-gis-3
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_train_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_train_track_out.pkl
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_valid_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_valid_track_out.pkl
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_test_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_test_track_out.pkl
 ```
 
+Now run `calculate_AIS_mean.py` to get the mean pickle file.
+
+```shell
+python calculate_AIS_mean.py
+```
 ### Training the Embedding layer
 First we must train the Embedding layer:
 ```shell
