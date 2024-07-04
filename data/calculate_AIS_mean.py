@@ -34,7 +34,8 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "./csvs/clean_csvs_train_track_out.pkl"
+# dataset_path = "./csvs/clean_csvs_train_track_out.pkl"
+dataset_path = "./ais-gis-3/clean_csvs_train_track_out.pkl"
 # import tensorflow as tf
 
 # LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72

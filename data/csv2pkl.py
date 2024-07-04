@@ -229,9 +229,9 @@ for csv_filename in l_csv_filename:
             count += 1
             try:
                 l_l_msg.append([float(row[0]), float(row[1]), float(row[2]),
-                                float(row[3]), int(row[4]),
-                                int(row[5]), int(row[6]),
-                                timestamp, int(row[8])]
+                                float(row[3]), int(float(row[4])),
+                                int(float(row[5])), int(float(row[6])),
+                                timestamp, int(float(row[8]))]
                                )
             except:
                 n_error += 1

@@ -33,6 +33,16 @@ results
 └── ...                           # directory to save results to.
 ```
 
+Conda isntallation
+```shell
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+```
+
+Activate miniconda on your os.
+Now replace the data and chkpt from previous results.
 #### Requirements: 
 See requirements.yml
 
@@ -154,3 +164,17 @@ We would also like to thank Jetze Schuurmans for helping convert the code from P
 
 ### Contact
 For any questions, please open an issue.
+
+
+### Tracks info
+12 csvs have
+```text
+Writing to  ./ais-gis-3/clean_csvs_train_track.pkl ...
+Total number of tracks:  7167
+Writing to  ./ais-gis-3/clean_csvs_valid_track.pkl ...
+Total number of tracks:  6038
+Writing to  ./ais-gis-3/clean_csvs_test_track.pkl ...
+Total number of tracks:  3528
+```
+
+6 csvs
