@@ -357,7 +357,7 @@ def plot_abnormal_tracks(Vs_background,l_dict_anomaly,
     N = len(Vs_background)
     for d_i in range(N):
         key = l_keys[d_i]
-        if N > 0:
+        if N > 1:
             c = cmap(float(d_i)/(N-1))
         else:
             c = cmap(float(d_i) / N)
