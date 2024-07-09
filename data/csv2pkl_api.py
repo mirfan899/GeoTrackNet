@@ -34,7 +34,7 @@ LAT_MAX = 20.5
 LON_MIN = 116.8
 LON_MAX = 126.6
 
-dataset_path = "./csvs"
+dataset_path = "./data/csvs"
 l_csv_filename = ["api.csv"]
 
 pkl_filename = "clean_csvs_track.pkl"
