@@ -42,7 +42,12 @@ rm -rf ~/miniconda3/miniconda.sh
 ```
 
 Activate miniconda on your os.
-Now replace the data and chkpt from previous results.
+Install flask in conda env
+```shell
+pip install flask flask-restful
+```
+
+Now replace the data and chkpt from previous notebook results.
 #### Requirements: 
 See requirements.yml
 
