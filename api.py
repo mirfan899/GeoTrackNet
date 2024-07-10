@@ -1,3 +1,8 @@
+import glob
+import os.path
+from io import BytesIO
+from zipfile import ZipFile
+
 from flask import Flask, send_file, request
 from flask_restful import Resource, Api
 from flask_restful import reqparse
@@ -28,9 +33,23 @@ class Track(Resource):
             # generate pkls
             generate_csv2pkl()
             # get files, csv and png
-            files = get_results()
+            get_results()
+            stream = BytesIO()
+            csv = os.path.join("./results/", "*.csv")
+            pngs = os.path.join("./results/", "*.png")
+            download = glob.glob(csv)
+            download.extend(glob.glob(pngs))
+            with ZipFile(stream, 'w') as zf:
+                for file in download:
+                    zf.write(file, os.path.basename(file))
+            stream.seek(0)
 
-            return {"message": "Welcome to Tracker API", "status": 200}
+            return send_file(
+                stream,
+                as_attachment=True,
+                download_name='output.zip'
+            )
+
         else:
             return {"Error": "File not supported or file has issues."}
 
