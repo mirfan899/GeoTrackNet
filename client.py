@@ -1,9 +1,10 @@
 import requests
 
 url = 'http://127.0.0.1:5000/api/v1/track'
+# url = 'https://6a68a7c98c72.ngrok.app/api/v1/track'
 
 data = {
-    'tracks': [[1.3,2.4,3,4,4444,77.7777,8,1702700160,8]]
+    "tracks": [[14.25037667,124.84238,10.4,20.4,22,0,0,1702700160,311000296]]
 }
 
 headers = {
