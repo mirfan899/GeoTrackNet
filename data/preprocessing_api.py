@@ -40,13 +40,13 @@ def getConfig(args=sys.argv[1:]):
      
     # File paths
     parser.add_argument("--dataset_dir", type=str, 
-                        default="../data/csvs/",
+                        default="./data/csvs/",
                         help="Dir to dataset.")    
     parser.add_argument("--l_input_filepath", type=str, nargs='+',
                         default=["clean_csvs_train_track.pkl"],
                         help="List of path to input files.")
     parser.add_argument("--output_filepath", type=str,
-                        default="../data/csvs/clean_csvs_train_track_out.pkl",
+                        default="./data/csvs/clean_csvs_train_track_out.pkl",
                         help="Path to output file.")
     
     parser.add_argument("-v", "--verbose",dest='verbose',action='store_true', help="Verbose mode.")
