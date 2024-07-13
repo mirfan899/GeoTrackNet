@@ -131,8 +131,8 @@ def generate_csv2pkl():
         if sublist(VesselTypes[mmsi_], [30]):
             l_fishing.append(mmsi_)
 
-    np.save(cargo_tanker_filename, l_cargo_tanker)
-    np.save(cargo_tanker_filename.replace("_cargo_tanker.npy", "_fishing.npy"), l_fishing)
+    np.save(dataset_path + "/" + cargo_tanker_filename, l_cargo_tanker)
+    np.save(dataset_path + "/" + cargo_tanker_filename.replace("_cargo_tanker.npy", "_fishing.npy"), l_fishing)
 
     ## FILTERING
     # ======================================
