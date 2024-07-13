@@ -8,6 +8,7 @@ from flask_restful import Resource, Api
 from flask_restful import reqparse
 
 from data.csv2pkl_api import generate_csv2pkl
+from data.preprocessing_api import generate_pkl2outpkl
 from geotracknet_api import get_results
 from helpers import generate_csvs
 
@@ -32,6 +33,9 @@ class Track(Resource):
             generate_csvs(args["tracks"])
             # generate pkls
             generate_csv2pkl()
+
+            # data preprocessing
+            generate_pkl2outpkl()
             # get files, csv and png
             get_results()
             stream = BytesIO()
