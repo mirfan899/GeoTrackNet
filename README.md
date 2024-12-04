@@ -75,6 +75,11 @@ python dataset_preprocessing.py --dataset_dir ../data/csvs/ --l_input_filepath c
 python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_train_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_train_track_out.pkl
 python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_valid_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_valid_track_out.pkl
 python dataset_preprocessing.py --dataset_dir ../data/ais-gis-3/ --l_input_filepath clean_csvs_test_track.pkl --output_filepath ../data/ais-gis-3/clean_csvs_test_track_out.pkl
+
+# ais-gis-4
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-4/ --l_input_filepath clean_csvs_train_track.pkl --output_filepath ../data/ais-gis-4/clean_csvs_train_track_out.pkl
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-4/ --l_input_filepath clean_csvs_valid_track.pkl --output_filepath ../data/ais-gis-4/clean_csvs_valid_track_out.pkl
+python dataset_preprocessing.py --dataset_dir ../data/ais-gis-4/ --l_input_filepath clean_csvs_test_track.pkl --output_filepath ../data/ais-gis-4/clean_csvs_test_track_out.pkl
 ```
 
 Now run `calculate_AIS_mean.py` to get the mean pickle file.
